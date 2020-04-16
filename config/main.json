@@ -1,0 +1,251 @@
+{
+    "sql":{
+        "host": "127.0.0.1",
+        "port": 3306,
+        "user": "root",
+        "password": "qwerty",
+        "schema_path": "file://db_schema",
+        "table_meta": {
+            "member":{
+                "table_name": "members",
+                "primary_key": "id"
+            },
+            "post":{
+                "table_name": "posts",
+                "primary_key": "post_id"
+            },
+            "project":{
+                "table_name": "projects",
+                "primary_key": "project_id"
+            },
+            "memo":{
+                "table_name": "memos",
+                "primary_key": "memo_id"
+            },
+            "report":{
+                "table_name": "reports",
+                "primary_key": "id"
+            },
+            "tag":{
+                "table_name": "tags",
+                "primary_key": "tag_id"
+            }
+        },
+        "trasaction_id_placeholder": "{{LAST_INSERT_ID_PLACEHOLDER}}"
+    },
+    "redis":{
+        "read_url": "127.0.0.1:6379",
+        "write_url": "127.0.0.1:6379",
+        "password": "",
+        "cache":{
+            "latest_comment_count": 10,
+            "notification_count": 50
+        }
+    },
+    "es":{
+        "url": "http://35.194.205.202:9200",
+        "log_indices": "logstash-dev-readr-site-client-behavior-*"
+    },
+    "crawler": {
+        "headers":{
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36",
+            "Cookie": "readrid=46189420-dd96-423d-9762-351172d6d7b1; gsScrollPos-4048=0; mmid=6a2181ef-26e3-4345-ab16-d8a4de71fc03; gsScrollPos-7623=; G_ENABLED_IDPS=google; _ga=GA1.2.2145143215.1525835225; gsScrollPos-4378=; gsScrollPos-4547=; gsScrollPos-9274=0; _gid=GA1.2.1069681949.1528167263; csrf=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY2LCJ1dWlkIjoiZTVhNzMxOTUtNDIxYS0xMWU4LTljNTYtNDIwMTBhOGMwMTE2IiwiZW1haWwiOiJ5eWNoZW5AbWlycm9ybWVkaWEubWciLCJuaWNrbmFtZSI6IllZQyIsInJvbGUiOjksInNjb3BlcyI6WyJhZGRBY2NvdW50IiwiYWRkUG9zdCIsImFkZFRhZyIsImRlbGV0ZUFjY291bnQiLCJkZWxldGVQb3N0IiwiZGVsZXRlVGFnIiwiZWRpdE90aGVyUG9zdCIsImVkaXRQb3N0IiwiZWRpdFBvc3RPZyIsImVkaXRUYWciLCJlZGl0VmlkZW8iLCJtYW5hZ2VDb21tZW50IiwibWVtYmVyTWFuYWdlIiwicHVibGlzaFBvc3QiLCJ1cGRhdGVBY2NvdW50Il0sInVzZXJuYW1lIjpudWxsLCJzdWIiOiI3MDM5YmFhNi1hOGE2LTQyZGItYjY4ZC03MGVlMjA0OWMxNDAiLCJpYXQiOjE1MjgxNjk5NjIsImV4cCI6MzA1NjQyNjMyNCwiYXVkIjoicmVhZHIiLCJpc3MiOiJodHRwczovL3d3dy5yZWFkci50dyIsImp0aSI6IjIxMzI3M2VmLThjOWUtNGFlZC1iMWE2LTFiZmEzZDYyMDdkOSJ9.C8kfd5V7TdRh2ZH_TCTnhSgrRAc-lM6gXwt-czIKiw8"
+        }
+    },
+    "mail":{
+        "host": "http://104.155.204.242/mail",
+        "port": 4650,
+        "user": "readr@mirrormedia.mg",
+        "password": "galgoicxgagsvmfo",
+        "user_name": "Readr測試發信員",
+        "dev_team": "web-dev@mirrormedia.mg",
+        "enable": false,
+        "template_path": "config"
+    },
+    "search_feed":{
+        "host": "http://elasticsearch.text-searching:9200",
+        "index_name": "readr.posts",
+        "max_retry": 3
+    },
+    "models":{
+        "assets":{
+            "active": 1,
+            "deactive": 0
+        },
+        "asset_type":{
+            "image": 1,
+            "video": 2,
+            "audio": 3
+        },
+        "asset_copyright":{
+            "copyright": 1,
+            "cc": 2,
+            "cc-by-sa3": 3
+        },
+        "author_type":{
+            "ordinary": 0
+        },
+        "cards":{
+            "deactive": 0,
+            "active": 1
+        },
+        "card_status":{
+            "unpublish": 0,
+            "draft": 1,
+            "publish": 2
+        },
+        "members":{
+            "active": 1,
+            "deactive": 0,
+            "delete": -1
+        },
+        "member_daily_push":{
+            "deactive": 0,
+            "active": 1
+        },
+        "member_post_push":{
+            "deactive": 0,
+            "active": 1
+        },
+        "posts":{
+            "deactive": 0,
+            "active": 1
+        },
+        "post_type":{
+            "review": 0,
+            "news": 1,
+            "video": 2,
+            "live": 3,
+            "report": 4,
+            "memo": 5,
+            "paragragh": 6,
+            "dummy": 7,
+            "qa": 8
+        },
+        "post_publish_status":{
+            "unpublish": 0,
+            "draft": 1,
+            "publish": 2,
+            "schedule": 3,
+            "pending": 4
+        },
+        "tags":{
+            "deactive": 0,
+            "active": 1
+        },
+        "projects_active":{
+            "active": 1,
+            "deactive": 0
+        },
+        "projects_status":{
+            "candidate": 0,
+            "wip": 1,
+            "done": 2
+        },
+        "projects_publish_status":{
+            "unpublish": 0,
+            "draft": 1,
+            "publish": 2,
+            "schedule": 3
+        },
+        "memos":{
+            "active": 1,
+            "deactive": 0,
+            "pending": 2
+        },
+        "memos_publish_status":{
+            "unpublish": 0,
+            "draft": 1,
+            "publish": 2,
+            "schedule": 3
+        },
+        "comment":{
+            "active": 1,
+            "deactive": 0
+        },
+        "comment_status":{
+            "hide": 0,
+            "show": 1
+        },
+        "reported_comment_status":{
+            "pending": 0,
+            "resolved": 1
+        },
+        "reports":{
+            "deactive": 0,
+            "active": 1
+        },
+        "reports_publish_status":{
+            "unpublish": 0,
+            "draft": 1,
+            "publish": 2,
+            "schedule": 3
+        },
+        "tagging_type": {
+            "post": 1,
+            "project": 2,
+            "asset": 3
+        },
+        "following_type": {
+            "member": 1,
+            "post": 2,
+            "project": 3,
+            "memo": 4,
+            "report": 5,
+            "tag": 6
+        },
+        "emotions":{
+            "follow": 0,
+            "like": 1,
+            "dislike": 2
+        },
+        "point_type":{
+            "project": 1,
+            "project_memo": 2,
+            "topup": 3,
+            "gift": 4,
+            "donate": 5
+        },
+        "point_status":{
+            "pending": 1,
+            "complete": 2,
+            "rollback": 3
+        },
+        "hot_tags_wieght":{
+            "click": 1,
+            "pv": 2,
+            "follow": 3,
+            "emotion": 3,
+            "comment": 5,
+            "tag_follow": 3,
+            "tagged_post": 2
+        },
+        "promotions": {
+			"active": 1,
+			"deactive": 0
+		}
+    },
+    "readr_id": 126,
+    "default_order": 99,
+    "domain_name": "http://dev.readr.tw",
+    "token_secret": "CAAs00MGWWa6iGMn",
+    "payment_service": {
+        "partner_key": "partner_163LE4gns64BVpq3gyFgRDQlBeeA9E0Jam6tDKac1EJvxFMXY0upOa1S",
+        "merchant_id": "readr_TAISHIN",
+        "prime_url": "https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime",
+        "token_url": "https://sandbox.tappaysdk.com/tpc/payment/pay-by-token",
+        "currency": "TWD",
+        "payment_description": "READr points"
+    },
+    "invoice_service": {
+        "merchant_id": "31248689",
+        "url": "https://cinv.ezpay.com.tw/Api/invoice_issue",
+        "api_version": "1.4",
+        "key": "FRK97bjL9cUR7pxn4UBru2zPmHjmnUCg",
+        "IV": "lriz5wBar4EO9fCm"
+    },
+    "slack":{
+        "notify_webhook": "https://hooks.slack.com/services/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"
+    }
+}

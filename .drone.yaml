@@ -1,0 +1,104 @@
+workspace:
+  base: /go
+  path: src/github.com/readr-media/readr-restful-member
+pipeline:
+  start_slack:
+    image: plugins/slack
+    channel: jenkins
+    secrets: [slack_webhook]
+    username: drone
+    icon_url: https://avatars2.githubusercontent.com/u/2181346?s=200&v=4
+    template: >
+      *start* building *{{repo.name}}*.
+      *{{build.author}}* give *{{build.branch}}* a little push.
+    when:
+      event: [push]
+      branch: [dev]
+
+  get_config_dev:
+    image: gcr.io/mirrormedia-1470651750304/drone-cloud-sdk:latest
+    secrets: [google_credentials]
+    commands:
+    - gcloud source repos clone configs rr-configs
+    - cp rr-configs/readr-media/readr-restful/dev/main.json ./config/main.json
+    when:
+      event: [push, pull_request]
+      branch: [dev]
+
+  pull_request_test:
+    image: golang:1.14-alpine
+    environment:
+      - GO111MODULE=on
+    commands:
+    - apk add --update git make
+    - make deps
+    - make test
+    when:
+      event: [pull_request]
+      branch: [dev]
+
+  config_clean:
+    image: golang:1.14-alpine
+    commands:
+    - rm -rf rr-configs
+    when:
+      event: [push, pull_request]
+      branch: [dev]
+
+  builds:
+    image: golang:1.14-alpine
+    environment:
+      - GO111MODULE=on
+    commands:
+    - apk update
+    - apk add git make
+    - make build-alpine
+    when:
+      event: [push]
+      branch: dev
+
+  publish:
+    image: plugins/gcr
+    repo: mirrormedia-1470651750304/${DRONE_REPO_NAME}
+    tag: ${DRONE_COMMIT_AUTHOR}_${DRONE_BUILD_NUMBER}
+    environment:
+      - DOCKER_LAUNCH_DEBUG=true
+    secrets: [google_credentials]
+    when:
+      event: [push]
+      branch: [dev]
+
+  pr_test_fail:
+    image: plugins/slack
+    channel: jenkins
+    secrets: [slack_webhook]
+    username: drone
+    icon_url: https://avatars2.githubusercontent.com/u/2181346?s=200&v=4
+    when:
+      status: [success, failure]
+      event: [pull_request]
+      branch: [dev]
+    template: >
+      {{# success build.status}}
+        The pull request *passes* tests. Please review the <https://github.com/{{repo.owner}}/{{repo.name}}/pull/{{build.pull}}|pull request>
+      {{else}}
+        The pull request *failed* tests. Please modify your <https://github.com/{{repo.owner}}/{{repo.name}}/pull/{{build.pull}}|commit>
+      {{/success}}
+
+  finish_slack:
+    image: plugins/slack
+    channel: jenkins
+    secrets: [slack_webhook]
+    username: drone
+    icon_url: https://avatars2.githubusercontent.com/u/2181346?s=200&v=4
+    when:
+      status: [success, failure]
+      event: [push]
+      branch: [master, dev]
+    template: >
+      {{#success build.status}}
+        Build<${DRONE_BUILD_LINK}|#{{build.number}}> *success* ${DRONE_REPO_NAME}:${DRONE_COMMIT_AUTHOR}_${DRONE_BUILD_NUMBER} was well served.
+        Check out our new <https://gcr.io/mirrormedia-1470651750304/readr-restful|rest>
+      {{else}}
+        Houston, we have a problem. Build <${DRONE_BUILD_LINK}|#{{build.number}}> failed. Fix me please, {{build.author}}
+      {{/success}}
